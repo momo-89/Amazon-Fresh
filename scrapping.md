@@ -30,3 +30,27 @@ while True:
         pass
     time.sleep(30)
 ```
+
+For hungry pandas, add the following.
+```
+import urllib
+import json
+data = {}
+data['longitude'] = '-73.93698'
+data['latitude'] = '40.74927'
+data['version'] = '2.7.4'
+data['pageno'] = '1'
+data['categoryid'] = '187'
+url = 'http://app.usa.hungrypanda.co/api/user/shops/bycategoryid?filterJson=%7B%22freeDeliveryPrice%22%3A0%2C%22payment%22%3A-1%2C%22isNewStore%22%3A0%2C%22delivery%22%3A-1%2C%22fullSub%22%3A-1%2C%22isNewUser%22%3A0%2C%22isForNewOrder%22%3A0%7D'
+req = urllib.request.Request(url, headers=data)
+
+with urllib.request.urlopen(req) as resp:
+    the_page = json.loads(resp.read().decode('utf-8'))
+    for shop in the_page['result']['shopIndexList']:
+        if '超' in shop['shopName'] and shop['shopStatus'] == 0:
+            try:
+                clickatell = Http('9aQ7rldNQhS1r1bX_6SqFw==')
+                clickatell.sendMessage(['+19178817289'], "hungry pandas supermarket opening")
+            except:
+                pass
+```
